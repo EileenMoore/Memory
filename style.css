@@ -52,7 +52,7 @@ body {
 }
 
 .player h3 {
-    margin-top: 0;
+    margin: 0;
 }
 
 .material-icons {
@@ -65,4 +65,8 @@ body {
 
 .active span {
     font-size: 56px;
+}
+
+.found {
+    display: none;
 }
