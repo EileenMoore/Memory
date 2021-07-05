@@ -67,6 +67,24 @@ body {
     font-size: 56px;
 }
 
+.counter {
+    display: flex;
+}
+
+.animation {
+    animation: zoomIn 750ms ease-in-out;
+    z-index: 10;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(1.0);
+    }
+    to {
+        transform: scale(1.5);
+    }
+}
+
 .found {
-    display: none;
+    filter: brightness(60%);
 }

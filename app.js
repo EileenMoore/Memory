@@ -1,25 +1,31 @@
 let images = [{
         path: 'img/01.jpeg',
-        overlay: true
+        overlay: true,
+        found: false
     }, {
         path: 'img/01.jpeg',
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: 'img/02.jpeg',
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: 'img/02.jpeg',
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: "img/03.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: "img/03.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: "img/04.jpeg",
@@ -27,54 +33,67 @@ let images = [{
     },
     {
         path: "img/04.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: "img/05.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: "img/05.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     }, {
         path: "img/06.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: "img/06.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: "img/07.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: "img/07.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: "img/08.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: "img/08.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: "img/09.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: "img/09.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: "img/10.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     },
     {
         path: "img/10.jpeg",
-        overlay: true
+        overlay: true,
+        found: false
     }
 ];
 
@@ -92,11 +111,13 @@ let players = [{
 }];
 
 let currentPlayer = [];
+let foundCardIndex = [];
+let moves = 0;
 
 function init() {
     shuffleImages(images);
     showImages();
-    showPlayers();
+    updatePlayers();
     selectFirstPlayer();
 }
 
@@ -122,7 +143,7 @@ function showImages() {
     }
 }
 
-function showPlayers() {
+function updatePlayers() {
     document.getElementById('players').innerHTML = '';
     for (let index = 0; index < players.length; index++) {
         const player = players[index];
@@ -147,42 +168,82 @@ function hideOverlay(id) {
             console.log('selected cards ', selectedCards);
             image.overlay = !image.overlay;
         }
-        checkForSelectedCards();
+        checkSelectedCards();
     }
 }
 
-function checkForSelectedCards() {
+function checkSelectedCards() {
     if (selectedCards.length == 2) {
         console.log('2 cards selected!');
-        checkForPairs();
+        checkForPair();
         setTimeout(() => {
-            for (let index = 0; index < images.length; index++) {
-                const image = images[index];
-                document.getElementById(`overlay-${index}`).classList.remove("hideOverlay");
-                image.overlay = true;
-            }
+            removeOverlay();
             selectedCards.splice(0, selectedCards.length);
-            console.log('selected cards ', selectedCards);
+            countMoves();
             selectNextPlayer();
         }, 1000);
     }
 }
 
-function checkForPairs() {
+function removeOverlay() {
+    for (let index = 0; index < images.length; index++) {
+        const image = images[index];
+        if (!image.found) {
+            document.getElementById(`overlay-${index}`).classList.remove("hideOverlay");
+            image.overlay = true;
+        }
+    }
+}
+
+function countMoves() {
+    ++moves;
+    document.getElementById('counter').innerHTML = +moves;
+}
+
+function checkForPair() {
     if (selectedCards[0].path == selectedCards[1].path) {
         console.log('Pair detected!');
-        let foundCardIndex = [];
+        foundCardIndex = [];
         for (let index = 0; index < images.length; index++) {
             if (images[index].path == selectedCards[0].path) {
+                images[index].found = true;
                 foundCardIndex.push(index);
             }
         }
-        console.log('found card index ', foundCardIndex);
-        ++currentPlayer.pairs;
-        showPlayers();
-        document.getElementById(`overlay-${foundCardIndex[0]}`).classList.add('found');
-        document.getElementById(`overlay-${foundCardIndex[1]}`).classList.add('found');
+        animateCards();
+        setTimeout(() => {
+            ++currentPlayer.pairs;
+            checkForGameEnd();
+            updatePlayers();
+        }, 750);
     }
+}
+
+function checkForGameEnd() {
+    let foundImages = 0;
+    for (let index = 0; index < images.length; index++) {
+        const image = images[index];
+        if (image.found) {
+            ++foundImages;
+        }
+    }
+    console.log('found images ', foundImages);
+    if (foundImages == images.length) {
+        alert('Game finished');
+
+    }
+
+}
+
+function animateCards() {
+    document.getElementById(`picture-${foundCardIndex[0]}`).classList.add('animation');
+    document.getElementById(`picture-${foundCardIndex[1]}`).classList.add('animation');
+    setTimeout(() => {
+        document.getElementById(`picture-${foundCardIndex[0]}`).classList.remove('animation');
+        document.getElementById(`picture-${foundCardIndex[1]}`).classList.remove('animation');
+        document.getElementById(`picture-${foundCardIndex[0]}`).classList.add('found');
+        document.getElementById(`picture-${foundCardIndex[1]}`).classList.add('found');
+    }, 750);
 }
 
 function selectNextPlayer() {
