@@ -100,13 +100,13 @@ let images = [{
 let selectedCards = [];
 
 let players = [{
-    name: 'player-1',
+    name: 'Player-1',
     pairs: 0
 }, {
-    name: 'player-2',
+    name: 'Player-2',
     pairs: 0
 }, {
-    name: 'player-3',
+    name: 'Player-3',
     pairs: 0
 }];
 
@@ -229,10 +229,42 @@ function checkForGameEnd() {
     }
     console.log('found images ', foundImages);
     if (foundImages == images.length) {
-        alert('Game finished');
-
+        getWinners();
     }
 
+}
+
+function getWinners() {
+    let allPairs = [];
+    for (let index = 0; index < players.length; index++) {
+        const player = players[index];
+        allPairs.push(player.pairs);
+    }
+    console.log('pairs ', allPairs);
+    let maxPair = Math.max(...allPairs);
+    console.log('max pairs ', maxPair);
+    let winners = [];
+    for (let index = 0; index < players.length; index++) {
+        const player = players[index];
+        if (player.pairs == maxPair) {
+            winners.push(player);
+        }
+    }
+    showWinners(winners);
+}
+
+function showWinners(winners) {
+    console.log('winners ', winners);
+    var dialog = document.querySelector('dialog');
+    for (let index = 0; index < winners.length; index++) {
+        const winner = winners[index];
+        document.getElementById('title').innerHTML += `${winner.name} won the game!`;
+        document.getElementById('content').innerHTML += `${winner.name} collected ${winner.pairs} pairs.`;
+    }
+    dialog.showModal();
+    dialog.querySelector('.close').addEventListener('click', function() {
+        dialog.close();
+    });
 }
 
 function animateCards() {
