@@ -27,74 +27,74 @@ let images = [{
         overlay: true,
         found: false
     },
-    {
-        path: "img/04.jpeg",
-        overlay: true
-    },
-    {
-        path: "img/04.jpeg",
-        overlay: true,
-        found: false
-    },
-    {
-        path: "img/05.jpeg",
-        overlay: true,
-        found: false
-    },
-    {
-        path: "img/05.jpeg",
-        overlay: true,
-        found: false
-    }, {
-        path: "img/06.jpeg",
-        overlay: true,
-        found: false
-    },
-    {
-        path: "img/06.jpeg",
-        overlay: true,
-        found: false
-    },
-    {
-        path: "img/07.jpeg",
-        overlay: true,
-        found: false
-    },
-    {
-        path: "img/07.jpeg",
-        overlay: true,
-        found: false
-    },
-    {
-        path: "img/08.jpeg",
-        overlay: true,
-        found: false
-    },
-    {
-        path: "img/08.jpeg",
-        overlay: true,
-        found: false
-    },
-    {
-        path: "img/09.jpeg",
-        overlay: true,
-        found: false
-    },
-    {
-        path: "img/09.jpeg",
-        overlay: true,
-        found: false
-    },
-    {
-        path: "img/10.jpeg",
-        overlay: true,
-        found: false
-    },
-    {
-        path: "img/10.jpeg",
-        overlay: true,
-        found: false
-    }
+    // {
+    //     path: "img/04.jpeg",
+    //     overlay: true
+    // },
+    // {
+    //     path: "img/04.jpeg",
+    //     overlay: true,
+    //     found: false
+    // },
+    // {
+    //     path: "img/05.jpeg",
+    //     overlay: true,
+    //     found: false
+    // },
+    // {
+    //     path: "img/05.jpeg",
+    //     overlay: true,
+    //     found: false
+    // }, {
+    //     path: "img/06.jpeg",
+    //     overlay: true,
+    //     found: false
+    // },
+    // {
+    //     path: "img/06.jpeg",
+    //     overlay: true,
+    //     found: false
+    // },
+    // {
+    //     path: "img/07.jpeg",
+    //     overlay: true,
+    //     found: false
+    // },
+    // {
+    //     path: "img/07.jpeg",
+    //     overlay: true,
+    //     found: false
+    // },
+    // {
+    //     path: "img/08.jpeg",
+    //     overlay: true,
+    //     found: false
+    // },
+    // {
+    //     path: "img/08.jpeg",
+    //     overlay: true,
+    //     found: false
+    // },
+    // {
+    //     path: "img/09.jpeg",
+    //     overlay: true,
+    //     found: false
+    // },
+    // {
+    //     path: "img/09.jpeg",
+    //     overlay: true,
+    //     found: false
+    // },
+    // {
+    //     path: "img/10.jpeg",
+    //     overlay: true,
+    //     found: false
+    // },
+    // {
+    //     path: "img/10.jpeg",
+    //     overlay: true,
+    //     found: false
+    // }
 ];
 
 let selectedCards = [];
@@ -115,10 +115,41 @@ let foundCardIndex = [];
 let moves = 0;
 
 function init() {
+    selectPlayers();
+    startGame();
+}
+
+function selectPlayers() {
+
+}
+
+function newGame() {
+    resetGame();
+    startGame();
+}
+
+function startGame() {
     shuffleImages(images);
     showImages();
     updatePlayers();
     selectFirstPlayer();
+}
+
+function resetGame() {
+    selectedCards = [];
+    currentPlayer = [];
+    foundCardIndex = [];
+    moves = 0;
+    for (let index = 0; index < images.length; index++) {
+        const image = images[index];
+        image.found = false;
+        image.overlay = true;
+    }
+    document.getElementById('images').innerHTML = '';
+    for (let index = 0; index < players.length; index++) {
+        const player = players[index];
+        player.pairs = 0;
+    }
 }
 
 function selectFirstPlayer() {
@@ -255,16 +286,44 @@ function getWinners() {
 
 function showWinners(winners) {
     console.log('winners ', winners);
+    document.getElementById('title').innerHTML = '';
+    document.getElementById('content').innerHTML = '';
+    displayWinners(winners);
     var dialog = document.querySelector('dialog');
-    for (let index = 0; index < winners.length; index++) {
-        const winner = winners[index];
-        document.getElementById('title').innerHTML += `${winner.name} won the game!`;
-        document.getElementById('content').innerHTML += `${winner.name} collected ${winner.pairs} pairs.`;
-    }
     dialog.showModal();
     dialog.querySelector('.close').addEventListener('click', function() {
         dialog.close();
+        location.reload();
     });
+    dialog.querySelector('.newGame').addEventListener('click', function() {
+        dialog.close();
+        newGame();
+    });
+}
+
+function displayWinners(winners) {
+    if (winners.length == 1) {
+        document.getElementById('title').innerHTML += `${winners[0].name} won the game!`;
+    } else {
+        for (let index = 0; index < winners.length; index++) {
+            const winner = winners[index];
+            if (index == winners.length - 1) {
+                document.getElementById('title').innerHTML += ` and ${winner.name}`;
+            } else {
+                document.getElementById('title').innerHTML += ` ${winner.name},`;
+            }
+        }
+        document.getElementById('title').innerHTML += ` won the game!`;
+    }
+    for (let index = 0; index < players.length; index++) {
+        const player = players[index];
+        if (player.pairs == 1) {
+            document.getElementById('content').innerHTML += `${player.name} collected ${player.pairs} pair.<br>`;
+        } else {
+            document.getElementById('content').innerHTML += `${player.name} collected ${player.pairs} pairs.<br>`;
+        }
+    }
+    document.getElementById('content').innerHTML += `<br>${moves + 1} moves were played.`;
 }
 
 function animateCards() {
