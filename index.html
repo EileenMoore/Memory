@@ -24,7 +24,7 @@
     <div class="player-container" id="players">
     </div>
 
-    <div class="counter">
+    <div id="counter-container" class="counter d-none">
         Moves:&nbsp;
         <div id="counter"></div>
     </div>
@@ -32,6 +32,31 @@
     <dialog class="mdl-dialog">
         <h4 class="mdl-dialog__title" id="title"></h4>
         <div class="mdl-dialog__content" id="content">
+        </div>
+        <div class="mdl-dialog__actions">
+            <button type="button" class="mdl-button newGame">New Game</button>
+            <button type="button" class="mdl-button close">OK</button>
+        </div>
+    </dialog>
+
+    <dialog id="dialog-1" class="mdl-dialog">
+        <h4 class="mdl-dialog__title" id="title-1">
+            Add players
+        </h4>
+        <div class="mdl-dialog__content" id="content-1">
+            <div id="newPlayer"></div>
+            <span class="material-icons add-player" onclick="addPlayer()">
+                person_add
+                </span>
+        </div>
+        <div class="mdl-dialog__actions">
+            <button type="button" class="mdl-button close">Start Game</button>
+        </div>
+    </dialog>
+
+    <dialog id="dialog-2" class="mdl-dialog">
+        <h4 class="mdl-dialog__title" id="title-2"></h4>
+        <div class="mdl-dialog__content" id="content-2">
         </div>
         <div class="mdl-dialog__actions">
             <button type="button" class="mdl-button newGame">New Game</button>

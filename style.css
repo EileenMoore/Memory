@@ -1,90 +1,114 @@
-body {
-    background-color: rgba(0, 0, 0, 0.85);
-    font-family: 'Open Sans', sans-serif!important;
-    color: white;
-    margin: 0;
-    padding: 16px;
-}
-
-.image-container {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.picture {
-    position: relative;
-    height: 100px;
-    width: 100px;
-    margin: 8px;
-    cursor: pointer;
-}
-
-.picture img {
-    height: 100px;
-    width: 100px;
-}
-
-.overlay {
-    background-color: slateblue;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-.hideOverlay {
-    z-index: -10;
-}
-
-.player-container {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.player {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 16px;
-    color: rgba(255, 255, 255, 0.25);
-}
-
-.player h3 {
-    margin: 0;
-}
-
-.material-icons {
-    font-size: 48px;
-}
-
-.active {
-    color: white;
-}
-
-.active span {
-    font-size: 56px;
-}
-
-.counter {
-    display: flex;
-}
-
-.animation {
-    animation: zoomIn 750ms ease-in-out;
-    z-index: 10;
-}
-
-@keyframes zoomIn {
-    from {
-        transform: scale(1.0);
+    body {
+        background-color: rgba(0, 0, 0, 0.85);
+        font-family: 'Open Sans', sans-serif!important;
+        color: white;
+        margin: 0;
+        padding: 16px;
     }
-    to {
-        transform: scale(1.15);
+    
+    .image-container {
+        display: flex;
+        flex-wrap: wrap;
     }
-}
-
-.found {
-    filter: brightness(60%);
-}
+    
+    .picture {
+        position: relative;
+        height: 100px;
+        width: 100px;
+        margin: 8px;
+        cursor: pointer;
+    }
+    
+    .picture img {
+        height: 100px;
+        width: 100px;
+    }
+    
+    .overlay {
+        background-color: slateblue;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    
+    .hideOverlay {
+        z-index: -10;
+    }
+    
+    .player-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .player {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 16px;
+        color: rgba(255, 255, 255, 0.25);
+    }
+    
+    .player h3 {
+        margin: 0;
+    }
+    
+    .material-icons {
+        font-size: 48px;
+    }
+    
+    .active {
+        color: white;
+    }
+    
+    .active span {
+        font-size: 56px;
+    }
+    
+    .counter {
+        display: flex;
+    }
+    
+    .animation {
+        animation: zoomIn 750ms ease-in-out;
+        z-index: 10;
+    }
+    
+    @keyframes zoomIn {
+        from {
+            transform: scale(1.0);
+        }
+        to {
+            transform: scale(1.15);
+        }
+    }
+    
+    .found {
+        filter: brightness(60%);
+    }
+    
+    .add-player {
+        color: white;
+        background-color: blueviolet;
+        border-radius: 100%;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 32px;
+        margin-top: 16px;
+    }
+    
+    input {
+        margin-bottom: 5px;
+    }
+    
+    .d-none {
+        display: none;
+    }
+    
+    @media screen and (max-width: 800px) {
+        h1 {
+            display: none;
+        }
+    }
