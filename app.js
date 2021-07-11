@@ -98,7 +98,7 @@ let images = [{
 ];
 
 let selectedCards = [];
-let countPlayers = 0;
+let countPlayers = 1;
 let players = [];
 
 let currentPlayer = [];
@@ -110,6 +110,9 @@ function init() {
 }
 
 function openAddPlayersDialog() {
+    document.getElementById('newPlayer').innerHTML += `
+    <input id="new-player-${countPlayers}" placeholder="Player ${countPlayers}">
+    `;
     var dialog = document.querySelector('#dialog-1');
     dialog.showModal();
     dialog.querySelector('.close').addEventListener('click', function() {
