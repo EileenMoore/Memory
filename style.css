@@ -4,6 +4,12 @@
         color: white;
         margin: 0;
         padding: 16px;
+        width: auto!important;
+        height: auto!important;
+    }
+    
+    h1 {
+        margin-top: 0;
     }
     
     .image-container {
@@ -93,7 +99,7 @@
     
     .add-player {
         color: white;
-        background-color: blueviolet;
+        background-color: slateblue;
         border-radius: 100%;
         padding: 10px;
         cursor: pointer;
@@ -110,6 +116,9 @@
     }
     
     @media screen and (max-width: 800px) {
+        body {
+            padding: 0;
+        }
         h1 {
             display: none;
         }
