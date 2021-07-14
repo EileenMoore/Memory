@@ -142,9 +142,11 @@ function savePlayers() {
 
 function addPlayer() {
     ++countPlayers;
-    document.getElementById('newPlayer').innerHTML += `
-    <input id="new-player-${countPlayers}" placeholder="Player ${countPlayers}">
-    `;
+    let newPlayer = document.createElement("INPUT");
+    newPlayer.placeholder = 'Player' + countPlayers;
+    newPlayer.id = 'new-player-' + countPlayers;
+    let playerContainer = document.getElementById("newPlayer");
+    playerContainer.appendChild(newPlayer);
 }
 
 function newGame() {
